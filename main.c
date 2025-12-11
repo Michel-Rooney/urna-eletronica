@@ -15,7 +15,14 @@ typedef struct {
 
 int NCand = 0;
 int NElei = 0;
+int NPres = 0;
+int NGove = 0;
+int NPref = 0;
+
 Candidato *candidatos = NULL;
+Candidato *presidentes = NULL;
+Candidato *governadores = NULL;
+Candidato *prefeitos = NULL;
 
 void limparTela();
 int menuAdm();
@@ -139,7 +146,22 @@ void criarEleicao() {
     free(candidatos);
   }
 
+  if (presidentes != NULL) {
+    free(candidatos);
+  }
+
+  if (governadores != NULL) {
+    free(candidatos);
+  }
+
+  if (prefeitos != NULL) {
+    free(candidatos);
+  }
+
   candidatos = (Candidato *)malloc(NCand * sizeof(Candidato));
+  presidentes = (Candidato *)malloc(NCand * sizeof(Candidato));
+  governadores = (Candidato *)malloc(NCand * sizeof(Candidato));
+  prefeitos = (Candidato *)malloc(NCand * sizeof(Candidato));
 
   if (candidatos == NULL) {
     printf("Erro critico: Memoria insuficiente!\n");
@@ -203,6 +225,18 @@ void criarEleicao() {
 
     candidato.votos = 0;
     candidatos[i] = candidato;
+
+    if (strcmp(candidato.cargo, "Presidente") == 0) {
+      presidentes[i] = candidato;
+      NPres += 1;
+    } else if (strcmp(candidato.cargo, "Governador") == 0) {
+      governadores[i] = candidato;
+      NGove += 1;
+    } else if (strcmp(candidato.cargo, "Prefeito") == 0) {
+      prefeitos[i] = candidato;
+      NPref += 1;
+    }
+
     limparTela();
   }
 

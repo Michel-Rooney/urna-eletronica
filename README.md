@@ -61,6 +61,7 @@ O projeto foi escrito em **Linguagem C** respeitando o padrão ANSI (C89/C90). F
 
 - **Structs (Registros):** Para modelagem de Candidatos e Votos.
 - **Arrays (Vetores):** Para armazenamento das listas de candidatos.
+- **Alocação Dinâmica (`malloc`/`calloc`):** Para otimizar o uso de memória baseado na quantidade de eleitores definida pelo usuário.
 - **Manipulação de Strings:** Tratamento de nomes e partidos.
 - **Controle de Fluxo:** Validação de senhas e menus interativos.
 

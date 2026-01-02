@@ -25,6 +25,7 @@ Candidato *governadores = NULL;
 Candidato *prefeitos = NULL;
 
 void limparTela();
+void limparEleicao();
 int menuAdm();
 void criarEleicao();
 void menuEleicao();
@@ -92,6 +93,8 @@ int main() {
     limparTela();
   }
 
+  limparEleicao();
+
   return 0;
 }
 
@@ -101,6 +104,18 @@ void limparTela() {
 #else
   system("clear");
 #endif
+}
+
+void limparEleicao() {
+  free(candidatos);
+  free(presidentes);
+  free(governadores);
+  free(prefeitos);
+
+  candidatos = NULL;
+  presidentes = NULL;
+  governadores = NULL;
+  prefeitos = NULL;
 }
 
 int menuAdm() {
@@ -134,6 +149,7 @@ int menuAdm() {
 
 void criarEleicao() {
   limparTela();
+  limparEleicao();
   printf("\n");
   printf("=======================================\n");
   printf("            CRIAR ELEICAO              \n");
@@ -240,19 +256,19 @@ void criarEleicao() {
     limparTela();
   }
 
-  for (i = 0; i < NCand; i++) {
-    Candidato candidato = candidatos[i];
-    printf("\n");
-    printf("Cargo: %s\n", candidato.cargo);
-    printf("Nome: %s\n", candidato.nome);
-    printf("Sigla: %d\n", candidato.sigla);
-    printf("Partido: %s\n", candidato.partido);
-    printf("Votos: %d\n", candidato.votos);
-    printf("\n");
-  }
-
-  while (true) {
-  }
+  // for (i = 0; i < NCand; i++) {
+  //   Candidato candidato = candidatos[i];
+  //   printf("\n");
+  //   printf("Cargo: %s\n", candidato.cargo);
+  //   printf("Nome: %s\n", candidato.nome);
+  //   printf("Sigla: %d\n", candidato.sigla);
+  //   printf("Partido: %s\n", candidato.partido);
+  //   printf("Votos: %d\n", candidato.votos);
+  //   printf("\n");
+  // }
+  //
+  // while (true) {
+  // }
 }
 
 void menuEleicao() {}

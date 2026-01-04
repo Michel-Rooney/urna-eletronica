@@ -92,6 +92,12 @@ int main() {
     }
     limparTela();
   }
+<<<<<<< HEAD
+=======
+
+  limparEleicao();
+
+>>>>>>> 743dd8ae8fa7b0c74796bffadd351a1df1368508
   return 0;
 }
 
@@ -104,11 +110,23 @@ void limparTela() {
 }
 
 void limparEleicao() {
+<<<<<<< HEAD
   if (candidatos != NULL) {
     free(candidatos);
     candidatos = NULL;
   }
   // Removemos os arrays redundantes daqui
+=======
+  free(candidatos);
+  free(presidentes);
+  free(governadores);
+  free(prefeitos);
+
+  candidatos = NULL;
+  presidentes = NULL;
+  governadores = NULL;
+  prefeitos = NULL;
+>>>>>>> 743dd8ae8fa7b0c74796bffadd351a1df1368508
 }
 
 int menuAdm() {
@@ -149,8 +167,12 @@ int menuAdm() {
 
 void criarEleicao() {
   limparTela();
+<<<<<<< HEAD
   limparEleicao(); // Limpa memória anterior se houver
 
+=======
+  limparEleicao();
+>>>>>>> 743dd8ae8fa7b0c74796bffadd351a1df1368508
   printf("\n");
   printf("=======================================\n");
   printf("            CRIAR ELEICAO              \n");
@@ -201,11 +223,43 @@ void criarEleicao() {
     scanf(" %[^\n]", candidato.partido);
 
     candidato.votos = 0;
+<<<<<<< HEAD
     candidatos[i] = candidato; // Salva no vetor principal
   }
   
   printf("\nCadastro concluido! Pressione ENTER.");
   getchar(); getchar();
+=======
+    candidatos[i] = candidato;
+
+    if (strcmp(candidato.cargo, "Presidente") == 0) {
+      presidentes[i] = candidato;
+      NPres += 1;
+    } else if (strcmp(candidato.cargo, "Governador") == 0) {
+      governadores[i] = candidato;
+      NGove += 1;
+    } else if (strcmp(candidato.cargo, "Prefeito") == 0) {
+      prefeitos[i] = candidato;
+      NPref += 1;
+    }
+
+    limparTela();
+  }
+
+  // for (i = 0; i < NCand; i++) {
+  //   Candidato candidato = candidatos[i];
+  //   printf("\n");
+  //   printf("Cargo: %s\n", candidato.cargo);
+  //   printf("Nome: %s\n", candidato.nome);
+  //   printf("Sigla: %d\n", candidato.sigla);
+  //   printf("Partido: %s\n", candidato.partido);
+  //   printf("Votos: %d\n", candidato.votos);
+  //   printf("\n");
+  // }
+  //
+  // while (true) {
+  // }
+>>>>>>> 743dd8ae8fa7b0c74796bffadd351a1df1368508
 }
 
 //parte do eduardo abaixo

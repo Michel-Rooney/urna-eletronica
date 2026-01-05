@@ -1,3 +1,5 @@
 *.exe
 *.out
-urna
+./urna
+./main
+./boletim_urna.txt

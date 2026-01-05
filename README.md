@@ -88,21 +88,24 @@ gcc main.c -o urna -ansi -Wall -pedantic
 ### Execução
 
 - **Windows:**
+
   ```cmd
   urna.exe
   ```
+
 - **Linux/Mac:**
+
   ```bash
   ./urna
   ```
 
 ## 🖥️ Exemplo de Uso
 
-1.  Ao iniciar, insira a senha de admin: `ue@2022`.
-2.  Defina o cargo (ex: Prefeito) e a quantidade de candidatos/eleitores.
-3.  Cadastre os candidatos (Ex: _Nome: Fulano, Sigla: 10, Partido: ABC_).
-4.  O sistema abrirá a votação para os _N_ eleitores sequencialmente.
-5.  Ao final, o relatório de vencedores será exibido na tela.
+1. Ao iniciar, insira a senha de admin: `ue@2022`.
+2. Defina o cargo (ex: Prefeito) e a quantidade de candidatos/eleitores.
+3. Cadastre os candidatos (Ex: _Nome: Fulano, Sigla: 10, Partido: ABC_).
+4. O sistema abrirá a votação para os _N_ eleitores sequencialmente.
+5. Ao final, o relatório de vencedores será exibido na tela.
 
 ---
 

@@ -1,13 +1,13 @@
 =========================================
       RELATORIO OFICIAL DA ELEICAO       
-      Gerado em: 04/01/2026 as 20:59:51              
+      Gerado em: 06/01/2026 as 23:30:46              
 =========================================
 
 --- RESULTADO PARA Presidente ---
 CANDIDATO                      | PARTIDO    | VOTOS    | % VALIDOS
 -------------------------------+------------+----------+----------
-afonso                         | pla        | 00000    | 00.00%
-VENCEDOR ELEITO: afonso
+a                              | a          | 00000    | 00.00%
+VENCEDOR ELEITO: a
 
 --- RESULTADO PARA Governador ---
 CANDIDATO                      | PARTIDO    | VOTOS    | % VALIDOS
@@ -21,7 +21,7 @@ CANDIDATO                      | PARTIDO    | VOTOS    | % VALIDOS
 
 =========================================
 ESTATISTICAS GERAIS
-Total de Eleitores Aptos:  1
+Total de Eleitores Aptos:  0
 Comparecimento Total:      0
 Votos Validos (Nominais):  0
 Votos Brancos:             0

@@ -17,6 +17,13 @@ typedef struct {
   int votos;
 } Candidato;
 
+//estrutura para o voto:
+typedef struct {
+    char cargoescolha[11];
+    int siglaescolha;
+    char nomeeleitor[51];
+} Eleitor;
+
 int NCand = 0;
 int NElei = 0;
 int TotalBrancos = 0;
@@ -90,6 +97,7 @@ int main() {
       break;
     }
     case 2: {
+      limparTela();
       menuEleicao();
 
       if (NCand > 0) {
@@ -135,7 +143,7 @@ void limparBuffer() {
 }
 
 void sleep() {
-  printf("\n[Precione qualquer tecla para voltar]\n");
+  printf("\n[Pressione qualquer tecla para voltar]\n");
   getchar();
 }
 
@@ -555,6 +563,135 @@ void gerarRelatorioFinal() {
   sleep();
 }
 
-void menuEleicao() {
-  // Implementação futura da votação
+void menuEleicao() 
+{  
+    int j,resultado,opcaoVoto, confirmacaoVoto,votoFinalizado;
+    int cargoescolha;  
+    Eleitor *eleitor = (Eleitor *) malloc(NElei * sizeof(Eleitor));
+    if (eleitor == NULL) return;
+    for (int i = 0; i < NElei; i++)
+    {
+      votoFinalizado = 0;
+      while (votoFinalizado != 1)
+      {
+        resultado = 0;
+        printf("|=======================================|\n");
+        printf("|               ELEIÇÃO                 |\n");
+        printf("|       VOTAÇÃO DO ELEITOR %d de %d       |\n", i+1, NElei);
+        printf("|=======================================|\n");
+        printf("Nome do eleitor: ");
+        scanf(" %49[^\n]", eleitor[i].nomeeleitor);
+        printf("[1]Escolher candidado\n");
+        printf("[2]Votar em BRANCO\n");
+        printf("[3]Votar NULO\n");
+        printf("Digite: ");
+        scanf("%d", &opcaoVoto);
+        switch (opcaoVoto)
+        {
+        case 1:
+          printf("Cargo a ser votado:\n");
+          printf("[1]PRESIDENTE\n");
+          printf("[2]GOVERNADOR\n");
+          printf("[3]PREFEITO\n");
+          printf("[4]Voltar\n");
+          printf("Escolha: ");
+          scanf("%d", &cargoescolha);
+          if (cargoescolha == 1)
+          {
+            strcpy(eleitor[i].cargoescolha, "Presidente");
+          }
+          else if(cargoescolha == 2)
+          {
+            strcpy(eleitor[i].cargoescolha, "Governador");
+          }
+          else if(cargoescolha == 3)
+          {
+            strcpy(eleitor[i].cargoescolha, "Prefeito");
+          }
+          else if(cargoescolha == 4)
+          {
+            limparTela();
+            break;
+          }
+          do
+          {
+            printf("Sigla do %s(Inteiro com 2 digitos): ", eleitor[i].cargoescolha);
+            scanf("%d", &eleitor[i].siglaescolha);
+            printf("\n");
+            for (j = 0; j < NCand; j++)
+            {
+                if (eleitor[i].siglaescolha == candidatos[j].sigla)
+                {
+                  printf("CANDIDATO: %s\nPARTIDO: %s\n", candidatos[j].nome, candidatos[j].partido);
+                  resultado = 1;
+                  break;
+                }
+            }
+            if(resultado != 1)
+            {
+              printf("Não existe nenhum candidato com essa sigla!\n");
+              continue;
+            }  
+          } while (resultado != 1);
+          printf("[1] Confirmar voto.\n");
+          printf("[2] Voltar para a Escolha de Sigla.\n");
+          printf("Opção: ");
+          scanf("%d", &confirmacaoVoto);
+          if (confirmacaoVoto == 1)
+          {
+            candidatos[j].votos++;
+            printf("Voto confirmado!\n");
+            votoFinalizado = 1;
+            limparTela();
+            break;  
+          }
+          else if(confirmacaoVoto == 2)
+          {
+            limparTela();
+            continue;
+          }
+          break;
+        case 2:
+          printf("[1]Confirmar o voto em BRANCO\n");
+          printf("[2]Voltar\n");
+          printf("Escolha: ");
+          scanf("%d", &confirmacaoVoto);
+          if (confirmacaoVoto == 1)
+          {
+            TotalBrancos++;
+            printf("Voto em BRANCO confirmado!\n");
+            votoFinalizado = 1;
+            limparTela();
+            break;  
+          }
+          else if(confirmacaoVoto == 2)
+          {
+            continue;
+          }
+          break;
+        case 3:
+          printf("[1]Confirmar ANULAÇÃO de voto\n");
+          printf("[2]Voltar\n");
+          printf("Escolha: ");
+          scanf("%d", &confirmacaoVoto);
+          if (confirmacaoVoto == 1)
+          {
+            TotalNulos++;
+            printf("Voto ANULADO!\n");
+            votoFinalizado = 1;
+            limparTela();
+            break;  
+          }
+          else if(confirmacaoVoto == 2)
+          {
+            continue;
+          }
+          break;
+        default:
+          break;
+        }
+      }
+    }
+    free(eleitor);
+    printf("VOTAÇÃO ENCERRADA!\n");
 }

@@ -33,6 +33,7 @@ Candidato *candidatos = NULL;
 
 void limparTela();
 void limparEleicao();
+void limparVotos();
 void sleep();
 void limparBuffer();
 void menuAdm();
@@ -115,6 +116,7 @@ int main() {
     }
     case 3: {
       gerarRelatorioFinal();
+      break;
     }
     case 4: {
       limparEleicao();
@@ -145,6 +147,14 @@ void limparEleicao() {
     free(candidatos);
 
   candidatos = NULL;
+}
+
+void limparVotos() {
+  int i;
+  for (i = 0; i < NCand; i++) {
+    Candidato candidato = candidatos[i];
+    candidato.votos = 0;
+  }
 }
 
 void limparBuffer() {
@@ -584,10 +594,12 @@ void gerarRelatorioFinal() {
 
   printf("\n\t[SUCESSO] O arquivo 'boletim_urna.txt' foi gerado.\n");
   sleep();
+  return;
 }
 
 void menuEleicao() {
   limparTela();
+  limparVotos();
 
   int j, resultado, opcaoVoto, confirmacaoVoto, votoFinalizado;
   int cargoescolha;

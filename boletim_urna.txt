@@ -1,0 +1,28 @@
+=========================================
+      RELATORIO OFICIAL DA ELEICAO       
+      Gerado em: 07/01/2026 as 22:54:43              
+=========================================
+
+--- RESULTADO PARA Presidente ---
+CANDIDATO                      | PARTIDO    | VOTOS    | % VALIDOS
+-------------------------------+------------+----------+----------
+(Nenhum candidato concorreu a este cargo)
+
+--- RESULTADO PARA Governador ---
+CANDIDATO                      | PARTIDO    | VOTOS    | % VALIDOS
+-------------------------------+------------+----------+----------
+(Nenhum candidato concorreu a este cargo)
+
+--- RESULTADO PARA Prefeito ---
+CANDIDATO                      | PARTIDO    | VOTOS    | % VALIDOS
+-------------------------------+------------+----------+----------
+(Nenhum candidato concorreu a este cargo)
+
+=========================================
+ESTATISTICAS GERAIS
+Total de Eleitores Aptos:  0
+Comparecimento Total:      0
+Votos Validos (Nominais):  0
+Votos Brancos:             0
+Votos Nulos:               0
+=========================================

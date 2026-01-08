@@ -4,10 +4,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <locale.h>
 
 #define ADMIN_SENHA "ue@2022"
 
-// # TODO: Iniciar a elei√ß√£o e validar se NCand e NElei > 0
+// # TODO: Iniciar a eleiÁ„o e validar se NCand e NElei > 0
 
 typedef struct {
   char cargo[11];
@@ -49,6 +50,7 @@ void processarCategoria(char *categoria, FILE *arq);
 void gerarRelatorioFinal();
 
 int main() {
+  setlocale(LC_ALL,"portuguese");
   limparTela();
   int opcao = 0;
 
@@ -58,11 +60,11 @@ int main() {
     printf("           URNA ELETRONICA             \n");
     printf("=======================================\n");
     printf("\n");
-    printf("[1] - Administra√ß√£o\n");
-    printf("[2] - Come√ßar Elei√ß√£o\n");
-    printf("[3] - Gerar Relat√≥rio\n");
+    printf("[1] - AdministraÁ„o\n");
+    printf("[2] - ComeÁar EleiÁ„o\n");
+    printf("[3] - Gerar RelatÛrio\n");
     printf("[4] - Sair\n");
-    printf("Op√ß√£o: ");
+    printf("OpÁ„o: ");
     scanf("%d", &opcao);
 
     limparBuffer();
@@ -82,7 +84,7 @@ int main() {
         scanf(" %[^\n]", senha);
 
         if (strcmp(senha, ADMIN_SENHA) != 0) {
-          printf("Senha inv√°lida!\n");
+          printf("Senha inv·lida!\n");
         } else {
           break;
         }
@@ -100,13 +102,13 @@ int main() {
     }
     case 2: {
       if (NCand <= 0) {
-        printf("Candidados n√£o foram cadastrados!\n");
+        printf("Candidados n„o foram cadastrados!\n");
         sleep();
         break;
       }
 
       if (NElei <= 0) {
-        printf("A quantidade de eleitores n√£o foi definida!\n");
+        printf("A quantidade de eleitores n„o foi definida!\n");
         sleep();
         break;
       }
@@ -123,7 +125,7 @@ int main() {
       return 0;
     }
     default: {
-      printf("Op√ß√£o inv√°lida!\n");
+      printf("OpÁ„o inv·lida!\n");
       sleep();
     }
     }
@@ -172,8 +174,8 @@ bool is_string_numeric(const char *str) {
   if (str == NULL || *str == '\0') {
     return false;
   }
-
-  for (int i = 0; str[i] != '\0'; i++) {
+	int i;
+  for (i = 0; str[i] != '\0'; i++) {
 
     if (!isdigit((unsigned char)str[i])) {
       return false;
@@ -197,7 +199,7 @@ void menuAdm() {
     printf("[3] - Remover Candidato\n");
     printf("[4] - Definir a quantidade de Eleitores\n");
     printf("[5] - Voltar\n");
-    printf("Op√ß√£o: ");
+    printf("OpÁ„o: ");
     scanf("%d", &opcao);
 
     limparBuffer();
@@ -218,7 +220,7 @@ void menuAdm() {
     case 5:
       return;
     default:
-      printf("Op√ß√£o inv√°lida!\n");
+      printf("OpÁ„o inv·lida!\n");
       sleep();
     }
   }
@@ -228,7 +230,8 @@ void listarCandidatosInterno() {
   printf("ID | %-10s | %-30s | %-12s | SIGLA\n", "CARGO", "NOME", "PARTIDO");
   printf("---|------------+--------------------------------+--------------+----"
          "---\n");
-  for (int i = 0; i < NCand; i++) {
+	int i;
+  for (i = 0; i < NCand; i++) {
     printf("%2d | %-10s | %-30s | %-12s | %d\n", i + 1, candidatos[i].cargo,
            candidatos[i].nome, candidatos[i].partido, candidatos[i].sigla);
   }
@@ -238,7 +241,8 @@ void listarCandidatosPorCargo(char cargo[11]) {
   printf("ID | %-10s | %-30s | %-12s | SIGLA\n", "CARGO", "NOME", "PARTIDO");
   printf("---|------------+--------------------------------+--------------+----"
          "---\n");
-  for (int i = 0; i < NCand; i++) {
+    int i;
+  for (i = 0; i < NCand; i++) {
     if (strcmp(candidatos[i].cargo, cargo) == 0) {
       printf("%2d | %-10s | %-30s | %-12s | %d\n", i + 1, candidatos[i].cargo,
              candidatos[i].nome, candidatos[i].partido, candidatos[i].sigla);
@@ -287,7 +291,7 @@ void adicionarCandidato() {
     printf("[1] - Presidente\n");
     printf("[2] - Governador\n");
     printf("[3] - Prefeito\n");
-    printf("Op√ß√£o: ");
+    printf("OpÁ„o: ");
     scanf("%d", &opcao);
 
     limparBuffer();
@@ -302,7 +306,7 @@ void adicionarCandidato() {
       strcpy(novo.cargo, "Prefeito");
       break;
     } else {
-      printf("Op√ß√£o inv√°lida!\n");
+      printf("OpÁ„o inv·lida!\n");
       sleep();
       limparTela();
     }
@@ -319,7 +323,7 @@ void adicionarCandidato() {
     status = scanf("%d", &temp);
 
     if (status != 1) {
-      printf("Digite um n√∫mero!\n");
+      printf("Digite um n˙mero!\n");
       limparBuffer();
       continue;
     }
@@ -328,7 +332,7 @@ void adicionarCandidato() {
     int is_valid = 1;
     for (i = 0; i < NCand; i++) {
       if (candidatos[i].sigla == temp) {
-        printf("Essa sigla j√° foi cadastrada!\n");
+        printf("Essa sigla j· foi cadastrada!\n");
         is_valid = 0;
       }
     }
@@ -383,22 +387,22 @@ void removerCandidato() {
   }
 
   int confirmarDelecao = 0;
-  printf("Deseja realmente fazer a dele√ß√£o?\n");
+  printf("Deseja realmente fazer a deleÁ„o?\n");
   printf("[1] - Sim\n");
-  printf("[2] - N√£o\n");
-  printf("Op√ß√£o: ");
+  printf("[2] - N„o\n");
+  printf("OpÁ„o: ");
   scanf("%d", &confirmarDelecao);
   limparBuffer();
 
   if (confirmarDelecao != 1) {
-    printf("Dele√ß√£o cancelada!");
+    printf("DeleÁ„o cancelada!");
     sleep();
     return;
   }
 
   int indice = idRemover - 1;
-
-  for (int i = indice; i < NCand - 1; i++) {
+  int i;
+  for (i = indice; i < NCand - 1; i++) {
     candidatos[i] = candidatos[i + 1];
   }
 
@@ -439,7 +443,7 @@ void definirEleitores() {
     status = scanf("%d", &temp);
 
     if (status != 1) {
-      printf("Digite um n√∫mero!\n");
+      printf("Digite um n˙mero!\n");
       limparBuffer();
       continue;
     }
@@ -457,8 +461,9 @@ void definirEleitores() {
 
 void ordenarPorVotos(Candidato *vetor, int tamanho) {
   Candidato temp;
-  for (int i = 0; i < tamanho - 1; i++) {
-    for (int j = 0; j < tamanho - i - 1; j++) {
+  int i,j;
+  for (i = 0; i < tamanho - 1; i++) {
+    for (j = 0; j < tamanho - i - 1; j++) {
       // Sinal '<' ordena do Maior para o Menor
       if (vetor[j].votos < vetor[j + 1].votos) {
         temp = vetor[j];
@@ -469,15 +474,16 @@ void ordenarPorVotos(Candidato *vetor, int tamanho) {
   }
 }
 
-// Fun√ß√£o inteligente que filtra, ordena, mostra na tela e salva no arquivo
+// FunÁ„o inteligente que filtra, ordena, mostra na tela e salva no arquivo
 void processarCategoria(char *categoria, FILE *arq) {
-  // 1. Cria um vetor tempor√°rio apenas para essa categoria
+  // 1. Cria um vetor tempor·rio apenas para essa categoria
   Candidato *tempLista = (Candidato *)malloc(NCand * sizeof(Candidato));
   int cont = 0;
   int votosValidos = 0;
 
   // 2. Filtra do vetor principal (Global)
-  for (int i = 0; i < NCand; i++) {
+  int i;
+  for (i = 0; i < NCand; i++) {
     if (strcmp(candidatos[i].cargo, categoria) == 0) {
       tempLista[cont] = candidatos[i];
       votosValidos += candidatos[i].votos;
@@ -485,10 +491,10 @@ void processarCategoria(char *categoria, FILE *arq) {
     }
   }
 
-  // 3. Ordena esse grupo espec√≠fico
+  // 3. Ordena esse grupo especÌfico
   ordenarPorVotos(tempLista, cont);
 
-  // 4. Exibe Cabe√ßalhos (Tela + Arquivo)
+  // 4. Exibe CabeÁalhos (Tela + Arquivo)
   printf("\n\t--- RESULTADO PARA %s ---\n", categoria);
   fprintf(arq, "\n--- RESULTADO PARA %s ---\n", categoria);
 
@@ -503,8 +509,8 @@ void processarCategoria(char *categoria, FILE *arq) {
       arq,
       "-------------------------------+------------+----------+----------\n");
 
-  // 5. Loop de Impress√£o
-  for (int i = 0; i < cont; i++) {
+  // 5. Loop de Impress„o
+  for (i = 0; i < cont; i++) {
     float porcentagem = 0.0;
     if (votosValidos > 0) {
       porcentagem = ((float)tempLista[i].votos / votosValidos) * 100;
@@ -528,7 +534,7 @@ void processarCategoria(char *categoria, FILE *arq) {
     fprintf(arq, "(Nenhum candidato concorreu a este cargo)\n");
   }
 
-  free(tempLista); // Libera a mem√≥ria tempor√°ria
+  free(tempLista); // Libera a memÛria tempor·ria
 }
 
 void gerarRelatorioFinal() {
@@ -547,7 +553,7 @@ void gerarRelatorioFinal() {
   char dataStr[64];
   strftime(dataStr, sizeof(dataStr), "%d/%m/%Y as %H:%M:%S", tm);
 
-  // Cabe√ßalho Principal
+  // CabeÁalho Principal
   printf("\n");
   printf("\t=========================================\n");
   printf("\t      RELATORIO OFICIAL DA ELEICAO       \n");
@@ -564,14 +570,15 @@ void gerarRelatorioFinal() {
   processarCategoria("Governador", arq);
   processarCategoria("Prefeito", arq);
 
-  // C√°lculos Gerais
+  // C·lculos Gerais
   int totalVotosNominais = 0;
-  for (int i = 0; i < NCand; i++)
+  int i;
+  for (i = 0; i < NCand; i++)
     totalVotosNominais += candidatos[i].votos;
 
   int totalGeral = totalVotosNominais + TotalBrancos + TotalNulos;
 
-  // Rodap√© Estat√≠stico
+  // RodapÈ EstatÌstico
   printf("\n\t=========================================\n");
   printf("\tESTATISTICAS GERAIS\n");
   printf("\tTotal de Eleitores Aptos:  %d\n", NElei);
@@ -607,14 +614,14 @@ void menuEleicao() {
 
   if (eleitor == NULL)
     return;
-
-  for (int i = 0; i < NElei; i++) {
+	int i;
+  for (i = 0; i < NElei; i++) {
     votoFinalizado = 0;
     while (votoFinalizado != 1) {
       resultado = 0;
       printf("|=======================================|\n");
-      printf("|               ELEI√á√ÉO                 |\n");
-      printf("|       VOTA√á√ÉO DO ELEITOR %d de %d       |\n", i + 1, NElei);
+      printf("|               ELEI«√O                 |\n");
+      printf("|       VOTA«√O DO ELEITOR %d de %d       |\n", i + 1, NElei);
       printf("|=======================================|\n");
       printf("Nome do eleitor: ");
       scanf(" %49[^\n]", eleitor[i].nomeeleitor);
@@ -659,13 +666,13 @@ void menuEleicao() {
             }
           }
           if (resultado != 1) {
-            printf("N√£o existe nenhum candidato com essa sigla!\n");
+            printf("N„o existe nenhum candidato com essa sigla!\n");
             continue;
           }
         } while (resultado != 1);
         printf("[1] - Confirmar voto.\n");
         printf("[2] - Voltar para a Escolha de Sigla.\n");
-        printf("Op√ß√£o: ");
+        printf("OpÁ„o: ");
         scanf("%d", &confirmacaoVoto);
         if (confirmacaoVoto == 1) {
           candidatos[j].votos++;
@@ -694,7 +701,7 @@ void menuEleicao() {
         }
         break;
       case 3:
-        printf("[1] - Confirmar ANULA√á√ÉO de voto\n");
+        printf("[1] - Confirmar ANULA«√O de voto\n");
         printf("[2] - Voltar\n");
         printf("Escolha: ");
         scanf("%d", &confirmacaoVoto);
@@ -714,5 +721,5 @@ void menuEleicao() {
     }
   }
   free(eleitor);
-  printf("VOTA√á√ÉO ENCERRADA!\n");
+  printf("VOTA«√O ENCERRADA!\n");
 }

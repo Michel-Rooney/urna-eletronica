@@ -532,8 +532,16 @@ void processarCategoria(char *categoria, FILE *arq) {
   }
 
   if (cont > 0) {
-    printf("\tVENCEDOR ELEITO: %s\n", tempLista[0].nome);
-    fprintf(arq, "VENCEDOR ELEITO: %s\n", tempLista[0].nome);
+    if (cont > 1 && tempLista[0].votos == tempLista[1].votos) {
+      printf(
+          "\tRESULTADO: EMPATE (Votos iguais entre os primeiros colocados)\n");
+      fprintf(
+          arq,
+          "RESULTADO: EMPATE (Votos iguais entre os primeiros colocados)\n");
+    } else {
+      printf("\tVENCEDOR ELEITO: %s\n", tempLista[0].nome);
+      fprintf(arq, "VENCEDOR ELEITO: %s\n", tempLista[0].nome);
+    }
   } else {
     printf("\t(Nenhum candidato concorreu a este cargo)\n");
     fprintf(arq, "(Nenhum candidato concorreu a este cargo)\n");

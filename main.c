@@ -16,9 +16,7 @@ typedef struct {
 } Candidato;
 
 typedef struct {
-  char cargoescolha[11];
-  int siglaescolha;
-  char nomeeleitor[51];
+  char nomeeleitor[50];
 } Eleitor;
 
 int NCand = 0;
@@ -147,10 +145,11 @@ void limparEleicao() {
 }
 
 void limparVotos() {
+  TotalBrancos = 0;
+  TotalNulos = 0;
   int i;
   for (i = 0; i < NCand; i++) {
-    Candidato candidato = candidatos[i];
-    candidato.votos = 0;
+    candidatos[i].votos = 0;
   }
 }
 
@@ -308,7 +307,7 @@ void adicionarCandidato() {
   }
 
   printf("\nNome do %s: ", novo.cargo);
-  scanf(" %[^\n]", novo.nome);
+  scanf(" %50[^\n]", novo.nome);
 
   while (true) {
     int temp = 0;
@@ -600,7 +599,7 @@ void menuEleicao() {
     printf("            Eleitor %d de %d           \n", i + 1, NElei);
     printf("=======================================\n");
     printf("Nome do eleitor: ");
-    scanf(" %49[^\n]", eleitoresLog[i].nomeeleitor);
+    scanf(" %50[^\n]", eleitoresLog[i].nomeeleitor);
     limparBuffer();
 
     for (c = 0; c < 3; c++) {

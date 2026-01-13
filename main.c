@@ -319,7 +319,7 @@ void adicionarCandidato() {
   }
 
   printf("\nNome do %s: ", novo.cargo);
-  scanf(" %50[^\n]", novo.nome);
+  scanf(" %49[^\n]", novo.nome);
 
   while (true) {
     int i;
@@ -338,6 +338,7 @@ void adicionarCandidato() {
 
     if (temp < 0) {
       printf("A sigla precisa ser um valor positivo!");
+      limparBuffer();
       continue;
     }
 
@@ -360,7 +361,7 @@ void adicionarCandidato() {
   limparBuffer();
 
   printf("Partido do %s: ", novo.cargo);
-  scanf(" %11[^\n]", novo.partido);
+  scanf(" %10[^\n]", novo.partido);
 
   novo.votos = 0;
 
@@ -544,7 +545,7 @@ void processarCategoria(char *categoria, FILE *arq) {
 void gerarRelatorioFinal() {
   int i;
   int totalVotosNominais = 0;
-  int totalGeral = totalVotosNominais + TotalBrancos + TotalNulos;
+  int totalGeral;
   time_t t = time(NULL);
   struct tm *tm = localtime(&t);
   char dataStr[64];
@@ -577,6 +578,8 @@ void gerarRelatorioFinal() {
   for (i = 0; i < NCand; i++)
     totalVotosNominais += candidatos[i].votos;
 
+  totalGeral = totalVotosNominais + TotalBrancos + TotalNulos;
+
   printf("\n\t=========================================\n");
   printf("\tESTATISTICAS GERAIS\n");
   printf("\tTotal de Eleitores Aptos:  %d\n", NElei);
@@ -596,6 +599,7 @@ void gerarRelatorioFinal() {
   fprintf(arq, "=========================================\n");
 
   printf("\n\t[SUCESSO] O arquivo 'boletim_urna.txt' foi gerado.\n");
+  fclose(arq);
   sleep();
   return;
 }
@@ -611,8 +615,11 @@ void menuEleicao() {
   limparTela();
   limparVotos();
 
-  if (eleitoresLog == NULL)
+  if (eleitoresLog == NULL) {
+    printf("Erro de memoria!\n");
+    sleep();
     return;
+  }
 
   for (i = 0; i < NElei; i++) {
     limparTela();
@@ -622,7 +629,7 @@ void menuEleicao() {
     printf("            Eleitor %d de %d           \n", i + 1, NElei);
     printf("=======================================\n");
     printf("Nome do eleitor: ");
-    scanf(" %50[^\n]", eleitoresLog[i].nomeeleitor);
+    scanf(" %49[^\n]", eleitoresLog[i].nomeeleitor);
     limparBuffer();
 
     for (c = 0; c < 3; c++) {

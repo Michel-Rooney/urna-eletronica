@@ -1,0 +1,31 @@
+=========================================
+      RELATORIO OFICIAL DA ELEICAO       
+      Gerado em: 12/01/2026 as 22:01:37              
+=========================================
+
+--- RESULTADO PARA Presidente ---
+CANDIDATO                      | PARTIDO    | VOTOS    | % VALIDOS
+-------------------------------+------------+----------+----------
+a                              | f          | 00002    | 100.00%
+VENCEDOR ELEITO: a
+
+--- RESULTADO PARA Governador ---
+CANDIDATO                      | PARTIDO    | VOTOS    | % VALIDOS
+-------------------------------+------------+----------+----------
+a                              | a          | 00002    | 100.00%
+VENCEDOR ELEITO: a
+
+--- RESULTADO PARA Prefeito ---
+CANDIDATO                      | PARTIDO    | VOTOS    | % VALIDOS
+-------------------------------+------------+----------+----------
+adf                            | a          | 00002    | 100.00%
+VENCEDOR ELEITO: adf
+
+=========================================
+ESTATISTICAS GERAIS
+Total de Eleitores Aptos:  5
+Comparecimento Total:      15
+Votos Validos (Nominais):  6
+Votos Brancos:             2
+Votos Nulos:               7
+=========================================

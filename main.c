@@ -633,7 +633,7 @@ void menuEleicao() {
     limparTela();
     printf("=======================================\n");
     printf("               ELEICAO                 \n");
-    printf("       IDENTIFICAcaO DO ELEITOR        \n");
+    printf("       IDENTIFICACAO DO ELEITOR        \n");
     printf("            Eleitor %d de %d           \n", i + 1, NElei);
     printf("=======================================\n");
     printf("Nome do eleitor: ");

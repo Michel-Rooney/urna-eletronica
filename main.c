@@ -44,10 +44,11 @@ void processarCategoria(char *categoria, FILE *arq);
 void gerarRelatorioFinal();
 
 int main() {
-  limparTela();
   int opcao = 0;
+  int status = 0;
 
   while (true) {
+    limparTela();
     printf("\n");
     printf("=======================================\n");
     printf("           URNA ELETRONICA             \n");
@@ -58,7 +59,14 @@ int main() {
     printf("[3] - Gerar Relatorio\n");
     printf("[4] - Sair\n");
     printf("Opcao: ");
-    scanf("%d", &opcao);
+    status = scanf("%d", &opcao);
+
+    if (status != 1) {
+      printf("Digite um numero!\n");
+      limparBuffer();
+      sleep();
+      continue;
+    }
 
     limparBuffer();
 
@@ -145,9 +153,11 @@ void limparEleicao() {
 }
 
 void limparVotos() {
+  int i;
+
   TotalBrancos = 0;
   TotalNulos = 0;
-  int i;
+
   for (i = 0; i < NCand; i++) {
     candidatos[i].votos = 0;
   }
@@ -165,10 +175,12 @@ void sleep() {
 }
 
 bool is_string_numeric(const char *str) {
+  int i;
+
   if (str == NULL || *str == '\0') {
     return false;
   }
-  int i;
+
   for (i = 0; str[i] != '\0'; i++) {
 
     if (!isdigit((unsigned char)str[i])) {
@@ -221,10 +233,10 @@ void menuAdm() {
 }
 
 void listarCandidatosInterno() {
+  int i;
   printf("ID | %-10s | %-30s | %-12s | SIGLA\n", "CARGO", "NOME", "PARTIDO");
   printf("---|------------+--------------------------------+--------------+----"
          "---\n");
-  int i;
   for (i = 0; i < NCand; i++) {
     printf("%2d | %-10s | %-30s | %-12s | %d\n", i + 1, candidatos[i].cargo,
            candidatos[i].nome, candidatos[i].partido, candidatos[i].sigla);
@@ -232,10 +244,10 @@ void listarCandidatosInterno() {
 }
 
 void listarCandidatosPorCargo(char cargo[11]) {
+  int i;
   printf("ID | %-10s | %-30s | %-12s | SIGLA\n", "CARGO", "NOME", "PARTIDO");
   printf("---|------------+--------------------------------+--------------+----"
          "---\n");
-  int i;
   for (i = 0; i < NCand; i++) {
     if (strcmp(candidatos[i].cargo, cargo) == 0) {
       printf("%2d | %-10s | %-30s | %-12s | %d\n", i + 1, candidatos[i].cargo,
@@ -261,26 +273,26 @@ void listarCandidatos() {
 }
 
 void adicionarCandidato() {
+  int opcao = 0;
+  Candidato *novoCandidatos =
+      (Candidato *)realloc(candidatos, (NCand + 1) * sizeof(Candidato));
+
+  Candidato novo;
+
   limparTela();
+
   printf("\n");
   printf("=======================================\n");
   printf("          ADICIONAR CANDIDATO          \n");
   printf("=======================================\n");
-
-  Candidato *novoCandidatos =
-      (Candidato *)realloc(candidatos, (NCand + 1) * sizeof(Candidato));
-
   if (novoCandidatos == NULL) {
     printf("Erro critico: Memoria insuficiente para adicionar candidato!\n");
     return;
   }
-
   candidatos = novoCandidatos;
 
-  Candidato novo;
-
   while (true) {
-    int opcao = 0;
+    opcao = 0;
     printf("\nEscolha o Cargo:\n");
     printf("[1] - Presidente\n");
     printf("[2] - Governador\n");
@@ -310,8 +322,10 @@ void adicionarCandidato() {
   scanf(" %50[^\n]", novo.nome);
 
   while (true) {
+    int i;
     int temp = 0;
     int status = 0;
+    int is_valid = 1;
 
     printf("Sigla do %s: ", novo.cargo);
     status = scanf("%d", &temp);
@@ -322,8 +336,12 @@ void adicionarCandidato() {
       continue;
     }
 
-    int i;
-    int is_valid = 1;
+    if (temp < 0) {
+      printf("A sigla precisa ser um valor positivo!");
+      continue;
+    }
+
+    is_valid = 1;
     for (i = 0; i < NCand; i++) {
       if (candidatos[i].sigla == temp) {
         printf("Essa sigla ja foi cadastrada!\n");
@@ -342,7 +360,7 @@ void adicionarCandidato() {
   limparBuffer();
 
   printf("Partido do %s: ", novo.cargo);
-  scanf(" %[^\n]", novo.partido);
+  scanf(" %11[^\n]", novo.partido);
 
   novo.votos = 0;
 
@@ -355,6 +373,12 @@ void adicionarCandidato() {
 }
 
 void removerCandidato() {
+  int i;
+  int c;
+  int idRemover;
+  int confirmarDelecao = 0;
+  int indice;
+
   limparTela();
   printf("\n");
   printf("=======================================\n");
@@ -369,18 +393,15 @@ void removerCandidato() {
 
   listarCandidatosInterno();
 
-  int idRemover;
   printf("\nDigite o ID (1 a %d) do candidato a remover: ", NCand);
   if (scanf("%d", &idRemover) != 1 || idRemover < 1 || idRemover > NCand) {
     printf("\nID invalido!\n");
-    int c;
     while ((c = getchar()) != '\n' && c != EOF)
       ;
     getchar();
     return;
   }
 
-  int confirmarDelecao = 0;
   printf("Deseja realmente fazer a delecao?\n");
   printf("[1] - Sim\n");
   printf("[2] - Nao\n");
@@ -394,8 +415,7 @@ void removerCandidato() {
     return;
   }
 
-  int indice = idRemover - 1;
-  int i;
+  indice = idRemover - 1;
   for (i = indice; i < NCand - 1; i++) {
     candidatos[i] = candidatos[i + 1];
   }
@@ -522,17 +542,21 @@ void processarCategoria(char *categoria, FILE *arq) {
 }
 
 void gerarRelatorioFinal() {
+  int i;
+  int totalVotosNominais = 0;
+  int totalGeral = totalVotosNominais + TotalBrancos + TotalNulos;
+  time_t t = time(NULL);
+  struct tm *tm = localtime(&t);
+  char dataStr[64];
+  FILE *arq = fopen("boletim_urna.txt", "w");
+
   limparTela();
 
-  FILE *arq = fopen("boletim_urna.txt", "w");
   if (arq == NULL) {
     printf("ERRO: Nao foi possivel criar o arquivo de relatorio!\n");
     return;
   }
 
-  time_t t = time(NULL);
-  struct tm *tm = localtime(&t);
-  char dataStr[64];
   strftime(dataStr, sizeof(dataStr), "%d/%m/%Y as %H:%M:%S", tm);
 
   printf("\n");
@@ -550,12 +574,8 @@ void gerarRelatorioFinal() {
   processarCategoria("Governador", arq);
   processarCategoria("Prefeito", arq);
 
-  int totalVotosNominais = 0;
-  int i;
   for (i = 0; i < NCand; i++)
     totalVotosNominais += candidatos[i].votos;
-
-  int totalGeral = totalVotosNominais + TotalBrancos + TotalNulos;
 
   printf("\n\t=========================================\n");
   printf("\tESTATISTICAS GERAIS\n");
@@ -581,13 +601,16 @@ void gerarRelatorioFinal() {
 }
 
 void menuEleicao() {
+  int encontrou = 0;
+  int indiceCandidato = -1;
+  int siglaDigitada;
+  int i, j, c, opcaoVoto, confirmacaoVoto;
+  char *cargos[] = {"Presidente", "Governador", "Prefeito"};
+  Eleitor *eleitoresLog = (Eleitor *)malloc(NElei * sizeof(Eleitor));
+
   limparTela();
   limparVotos();
 
-  int i, j, c, resultado, opcaoVoto, confirmacaoVoto;
-  char *cargos[] = {"Presidente", "Governador", "Prefeito"};
-
-  Eleitor *eleitoresLog = (Eleitor *)malloc(NElei * sizeof(Eleitor));
   if (eleitoresLog == NULL)
     return;
 
@@ -623,13 +646,12 @@ void menuEleicao() {
         limparBuffer();
 
         if (opcaoVoto == 1) {
-          int encontrou = 0;
+          encontrou = 0;
           limparTela();
           printf("--- LISTA DE CANDIDATOS (%s) ---\n", cargos[c]);
           listarCandidatosPorCargo(cargos[c]);
           printf("\nDigite a Sigla (ou 0 para voltar): ");
 
-          int siglaDigitada;
           if (scanf("%d", &siglaDigitada) != 1) {
             printf("Sigla invalida!\n");
             limparBuffer();
@@ -641,7 +663,7 @@ void menuEleicao() {
           if (siglaDigitada == 0)
             continue;
 
-          int indiceCandidato = -1;
+          indiceCandidato = -1;
           for (j = 0; j < NCand; j++) {
             if (strcmp(candidatos[j].cargo, cargos[c]) == 0 &&
                 candidatos[j].sigla == siglaDigitada) {
@@ -695,6 +717,6 @@ void menuEleicao() {
     sleep();
   }
   free(eleitoresLog);
-  printf("\nVOTAcaO ENCERRADA!\n");
+  printf("\nVOTACAO ENCERRADA!\n");
   sleep();
 }

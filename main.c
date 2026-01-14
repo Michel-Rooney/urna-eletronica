@@ -137,13 +137,7 @@ int main() {
   return 0;
 }
 
-void limparTela() {
-#ifdef _WIN32
-  system("cls");
-#else
-  system("clear");
-#endif
-}
+void limparTela() { system("cls"); }
 
 void limparEleicao() {
   if (candidatos)
